@@ -10,6 +10,9 @@ import KS2SATs from './pages/KS2SATs';
 import KS3Maths from './pages/KS3Maths';
 import KS2PastPapers from './pages/KS2PastPapers';
 import KS3Assessments from './pages/KS3Assessments';
+import GCSEExamPapers from './pages/GCSEExamPapers';
+import ALevelExamPapers from './pages/ALevelExamPapers';
+import GCSEEdexcelPastPapers from './pages/GCSEEdexcelPastPapers';
 import CopyrightNotice from './pages/CopyrightNotice';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RevisionPage from './components/RevisionPage';
@@ -139,6 +142,9 @@ type Page =
   | 'ks2-gps'
   | 'ks2-past-papers'
   | 'ks3-assessments'
+  | 'gcse-exam-papers'
+  | 'gcse-edexcel-past-papers'
+  | 'alevel-exam-papers'
   | 'copyright-notice'
   | 'privacy-policy';
 
@@ -236,6 +242,21 @@ export default function App() {
         return <KS2PastPapers onBack={() => setCurrentPage('home')} />;
       case 'ks3-assessments':
         return <KS3Assessments onBack={() => setCurrentPage('home')} />;
+      case 'gcse-exam-papers':
+        return (
+          <GCSEExamPapers 
+            onBack={() => setCurrentPage('home')} 
+            onEdexcelClick={(subject) => {
+              if (subject === 'Maths' || subject === 'Combined Science') {
+                setCurrentPage('gcse-edexcel-past-papers');
+              }
+            }}
+          />
+        );
+      case 'gcse-edexcel-past-papers':
+        return <GCSEEdexcelPastPapers onBack={() => setCurrentPage('gcse-exam-papers')} />;
+      case 'alevel-exam-papers':
+        return <ALevelExamPapers onBack={() => setCurrentPage('home')} />;
       case 'copyright-notice':
         return <CopyrightNotice onBack={() => setCurrentPage('home')} />;
       case 'privacy-policy':
@@ -271,9 +292,10 @@ export default function App() {
             label="EXAM PAPERS" 
             items={examPaperItems} 
             onItemClick={(item) => {
-              if (item === "GCSE") handleStageClick('gcse-edexcel', 'GCSE (Edexcel)');
+              if (item === "GCSE") setCurrentPage('gcse-exam-papers');
               if (item === "KS2 Past Papers") setCurrentPage('ks2-past-papers');
               if (item === "KS3 Assessments") setCurrentPage('ks3-assessments');
+              if (item === "A-LEVEL") setCurrentPage('alevel-exam-papers');
             }}
           />
         </nav>
@@ -329,11 +351,21 @@ export default function App() {
                 color="purple" 
                 onClick={() => handleStageClick('gcse-aqa', 'GCSE (AQA)')}
               />
-              <Card title="GCSE Past Papers" subtitle="(all boards)" color="purple" />
+              <Card 
+                title="GCSE Past Papers" 
+                subtitle="(all boards)" 
+                color="purple" 
+                onClick={() => setCurrentPage('gcse-exam-papers')}
+              />
 
               {/* A-Level Section */}
               <Card title="A-Level Revision" color="green" />
-              <Card title="A-Level Past Papers" subtitle="(all boards)" color="green" />
+              <Card 
+                title="A-Level Past Papers" 
+                subtitle="(all boards)" 
+                color="green" 
+                onClick={() => setCurrentPage('alevel-exam-papers')}
+              />
 
               {/* Buy Me a Coffee */}
               <div className="lg:col-start-2 lg:col-span-2 flex items-center justify-center">
