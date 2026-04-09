@@ -11,140 +11,20 @@ import {
   Download
 } from 'lucide-react';
 
+import assessmentsData from '../data/ks3_assessments.json';
+
 interface AssessmentSet {
   title: string;
   links: {
     label: string;
     url: string;
-    type?: 'question' | 'markscheme' | 'insert' | 'resource';
+    type?: string;
   }[];
 }
 
-const ENGLISH_ASSESSMENTS: AssessmentSet[] = [
-  {
-    title: "Writing",
-    links: [
-      { label: "Writing Paper", url: "https://files.cognitoedu.org/files/2%20-%20KS3/1%20-%20English/Writing%20Paper.pdf", type: 'insert' },
-      { label: "Answer Booklet", url: "https://files.cognitoedu.org/files/2%20-%20KS3/1%20-%20English/Writing%20Paper%20Answer%20Booklet.pdf", type: 'resource' }
-    ]
-  },
-  {
-    title: "Reading",
-    links: [
-      { label: "A Question of Choice (Insert)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/1%20-%20English/A%20Question%20of%20Choice.pdf", type: 'insert' },
-      { label: "Answer Booklet", url: "https://files.cognitoedu.org/files/2%20-%20KS3/1%20-%20English/A%20Question%20of%20Choice%20Answer%20Booklet.pdf", type: 'resource' }
-    ]
-  },
-  {
-    title: "Shakespeare",
-    links: [
-      { label: "The Tempest", url: "https://files.cognitoedu.org/files/2%20-%20KS3/1%20-%20English/Shakespeare%20Paper%20The%20Tempest.pdf", type: 'resource' },
-      { label: "Romeo and Juliet", url: "https://files.cognitoedu.org/files/2%20-%20KS3/1%20-%20English/Shakespeare%20Paper%20Romeo%20and%20Juliet.pdf", type: 'resource' }
-    ]
-  },
-  {
-    title: "Mark Scheme",
-    links: [
-      { label: "Full Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20KS3/1%20-%20English/MarkScheme.pdf", type: 'markscheme' }
-    ]
-  }
-];
-
-const MATHS_ASSESSMENTS: AssessmentSet[] = [
-  {
-    title: "Level 3-5",
-    links: [
-      { label: "Paper 1 (Non-Calc)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/2%20-%20Maths/ks3-maths-sat-paper-2009_35_Paper1.pdf", type: 'question' },
-      { label: "Paper 1 Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20Maths/maths-sat-paper-2009_Paper1_Markscheme.pdf", type: 'markscheme' },
-      { label: "Paper 2 (Calc)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/2%20-%20Maths/ks3-maths-sat-paper-2009_35_Paper2.pdf", type: 'question' },
-      { label: "Paper 2 Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20Maths/maths-sat-paper-2009_Paper2_Markscheme.pdf", type: 'markscheme' }
-    ]
-  },
-  {
-    title: "Level 4-6",
-    links: [
-      { label: "Paper 1 (Non-Calc)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/2%20-%20Maths/ks3-maths-sat-paper-2009_46_Paper1.pdf", type: 'question' },
-      { label: "Paper 1 Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20Maths/maths-sat-paper-2009_Paper1_Markscheme.pdf", type: 'markscheme' },
-      { label: "Paper 2 (Calc)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/2%20-%20Maths/ks3-maths-sat-paper-2009_46_Paper2.pdf", type: 'question' },
-      { label: "Paper 2 Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20Maths/maths-sat-paper-2009_Paper2_Markscheme.pdf", type: 'markscheme' }
-    ]
-  },
-  {
-    title: "Level 5-7",
-    links: [
-      { label: "Paper 1 (Non-Calc)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/2%20-%20Maths/ks3-maths-sat-paper-2009_57_Paper1.pdf", type: 'question' },
-      { label: "Paper 1 Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20Maths/maths-sat-paper-2009_Paper1_Markscheme.pdf", type: 'markscheme' },
-      { label: "Paper 2 (Calc)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/2%20-%20Maths/ks3-maths-sat-paper-2009_57_Paper2.pdf", type: 'question' },
-      { label: "Paper 2 Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20Maths/maths-sat-paper-2009_Paper2_Markscheme.pdf", type: 'markscheme' }
-    ]
-  },
-  {
-    title: "Level 6-8",
-    links: [
-      { label: "Paper 1 (Non-Calc)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/2%20-%20Maths/ks3-maths-sat-paper-2009_68_Paper1.pdf", type: 'question' },
-      { label: "Paper 1 Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20Maths/maths-sat-paper-2009_Paper1_Markscheme.pdf", type: 'markscheme' },
-      { label: "Paper 2 (Calc)", url: "https://files.cognitoedu.org/files/2%20-%20KS3/2%20-%20Maths/ks3-maths-sat-paper-2009_68_Paper2.pdf", type: 'question' },
-      { label: "Paper 2 Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20Maths/maths-sat-paper-2009_Paper2_Markscheme.pdf", type: 'markscheme' }
-    ]
-  }
-];
-
-const SCIENCE_ASSESSMENTS = {
-  biology: [
-    {
-      title: "Level 3-6",
-      links: [
-        { label: "Paper 1", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-36P1-2009.pdf", type: 'question' },
-        { label: "Paper 2", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-36P2-2009.pdf", type: 'question' },
-        { label: "Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-MarkScheme-2009.pdf", type: 'markscheme' }
-      ]
-    },
-    {
-      title: "Level 5-7",
-      links: [
-        { label: "Paper 1", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-57P1-2009.pdf", type: 'question' },
-        { label: "Paper 2", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-57P2-2009.pdf", type: 'question' },
-        { label: "Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-MarkScheme-2009.pdf", type: 'markscheme' }
-      ]
-    }
-  ],
-  chemistry: [
-    {
-      title: "Level 3-6",
-      links: [
-        { label: "Paper 1", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-36P1-2009.pdf", type: 'question' },
-        { label: "Paper 2", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-36P2-2009.pdf", type: 'question' },
-        { label: "Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-MarkScheme-2009.pdf", type: 'markscheme' }
-      ]
-    },
-    {
-      title: "Level 5-7",
-      links: [
-        { label: "Paper 1", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-57P1-2009.pdf", type: 'question' },
-        { label: "Paper 2", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-57P2-2009.pdf", type: 'question' },
-        { label: "Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-MarkScheme-2009.pdf", type: 'markscheme' }
-      ]
-    }
-  ],
-  physics: [
-    {
-      title: "Level 3-6",
-      links: [
-        { label: "Paper 1", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-36P1-2009.pdf", type: 'question' },
-        { label: "Paper 2", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-36P2-2009.pdf", type: 'question' },
-        { label: "Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-MarkScheme-2009.pdf", type: 'markscheme' }
-      ]
-    },
-    {
-      title: "Level 5-7",
-      links: [
-        { label: "Paper 1", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-57P1-2009.pdf", type: 'question' },
-        { label: "Paper 2", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-57P2-2009.pdf", type: 'question' },
-        { label: "Mark Scheme", url: "https://files.cognitoedu.org/files/2%20-%20KS3/3%20-%20Science/key-stage-3-ks3-science-MarkScheme-2009.pdf", type: 'markscheme' }
-      ]
-    }
-  ]
-};
+const ENGLISH_ASSESSMENTS: AssessmentSet[] = assessmentsData.ENGLISH_ASSESSMENTS;
+const MATHS_ASSESSMENTS: AssessmentSet[] = assessmentsData.MATHS_ASSESSMENTS;
+const SCIENCE_ASSESSMENTS: Record<string, AssessmentSet[]> = assessmentsData.SCIENCE_ASSESSMENTS;
 
 export default function KS3Assessments({ onBack }: { onBack: () => void }) {
   const [activeTab, setActiveTab] = useState<'maths' | 'english' | 'science'>('maths');

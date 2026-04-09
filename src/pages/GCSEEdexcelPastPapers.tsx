@@ -11,6 +11,8 @@ import {
   Download
 } from 'lucide-react';
 
+import papersData from '../data/gcse_edexcel_past_papers.json';
+
 interface Paper {
   name: string;
   paperUrl: string;
@@ -23,160 +25,8 @@ interface PaperGroup {
   papers: Paper[];
 }
 
-const MATHS_PAPERS: PaperGroup[] = [
-  {
-    year: "Nov 2024",
-    tier: "Foundation",
-    papers: [
-      { name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1f-que-20241105.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1f-rms-20241105.pdf" },
-      { name: "Paper 2", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2f-que-20241107.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2f-rms-20241107.pdf" },
-      { name: "Paper 3", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3f-que-20241112.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3f-rms-20241112.pdf" }
-    ]
-  },
-  {
-    year: "Nov 2024",
-    tier: "Higher",
-    papers: [
-      { name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1h-que-20241105.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1h-rms-20241105.pdf" },
-      { name: "Paper 2", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2h-que-20241107.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2h-rms-20241107.pdf" },
-      { name: "Paper 3", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3h-que-20241112.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3h-rms-20241112.pdf" }
-    ]
-  },
-  {
-    year: "June 2024",
-    tier: "Foundation",
-    papers: [
-      { name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1f-que-20240516.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1f-rms-20240822.pdf" },
-      { name: "Paper 2", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2f-que-20240529.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2f-rms-20240822.pdf" },
-      { name: "Paper 3", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3f-que-20240610.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3f-rms-20240822.pdf" }
-    ]
-  },
-  {
-    year: "June 2024",
-    tier: "Higher",
-    papers: [
-      { name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1h-que-20240516.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1h-rms-20240822.pdf" },
-      { name: "Paper 2", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2h-que-20240529.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2h-rms-20240822.pdf" },
-      { name: "Paper 3", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3h-que-20240610.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3h-rms-20240822.pdf" }
-    ]
-  },
-  {
-    year: "Nov 2023",
-    tier: "Foundation",
-    papers: [
-      { name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1f-que-20231114.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1f-rms-20240111.pdf" },
-      { name: "Paper 2", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2f-que-20231116.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2f-rms-20240111.pdf" },
-      { name: "Paper 3", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3f-que-20231121.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-3f-rms-20240111.pdf" }
-    ]
-  },
-  {
-    year: "Nov 2023",
-    tier: "Higher",
-    papers: [
-      { name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1h-que-20231114.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-1h-rms-20240111.pdf" },
-      { name: "Paper 2", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2h-que-20231116.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Mathematics/2015/Exam-materials/1ma1-2h-rms-20240111.pdf" }
-    ]
-  }
-];
-
-const SCIENCE_PAPERS = {
-  biology: [
-    {
-      year: "June 2020",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bf-que-20200513.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bf-rms-20200513.pdf" }]
-    },
-    {
-      year: "June 2020",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bh-que-20200513.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bh-rms-20200513.pdf" }]
-    },
-    {
-      year: "June 2019",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bf-que-20190516.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bf-rms-20190516.pdf" }]
-    },
-    {
-      year: "June 2019",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bh-que-20190516.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bh-rms-20190516.pdf" }]
-    },
-    {
-      year: "June 2018",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bf-que-20180517.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bf-rms-20180517.pdf" }]
-    },
-    {
-      year: "June 2018",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bh-que-20180517.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1bh-rms-20180517.pdf" }]
-    }
-  ],
-  chemistry: [
-    {
-      year: "June 2020",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1cf-que-20200514.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1cf-rms-20200514.pdf" }]
-    },
-    {
-      year: "June 2020",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ch-que-20200514.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ch-rms-20200514.pdf" }]
-    },
-    {
-      year: "June 2019",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1cf-que-20190517.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1cf-rms-20190517.pdf" }]
-    },
-    {
-      year: "June 2019",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ch-que-20190517.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ch-rms-20190517.pdf" }]
-    },
-    {
-      year: "June 2018",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1cf-que-20180518.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1cf-rms-20180518.pdf" }]
-    },
-    {
-      year: "June 2018",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ch-que-20180518.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ch-rms-20180518.pdf" }]
-    }
-  ],
-  physics: [
-    {
-      year: "June 2020",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1pf-que-20200515.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1pf-rms-20200515.pdf" }]
-    },
-    {
-      year: "June 2020",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ph-que-20200515.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ph-rms-20200515.pdf" }]
-    },
-    {
-      year: "June 2019",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1pf-que-20190520.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1pf-rms-20190520.pdf" }]
-    },
-    {
-      year: "June 2019",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ph-que-20190520.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ph-rms-20190520.pdf" }]
-    },
-    {
-      year: "June 2018",
-      tier: "Foundation",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1pf-que-20180522.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1pf-rms-20180522.pdf" }]
-    },
-    {
-      year: "June 2018",
-      tier: "Higher",
-      papers: [{ name: "Paper 1", paperUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ph-que-20180522.pdf", msUrl: "https://qualifications.pearson.com/content/dam/pdf/GCSE/Science/2016/Exam-materials/1sc0-1ph-rms-20180522.pdf" }]
-    }
-  ]
-};
+const MATHS_PAPERS: PaperGroup[] = papersData.MATHS_PAPERS as PaperGroup[];
+const SCIENCE_PAPERS: Record<string, PaperGroup[]> = papersData.SCIENCE_PAPERS as Record<string, PaperGroup[]>;
 
 export default function GCSEEdexcelPastPapers({ onBack }: { onBack: () => void }) {
   const [activeTab, setActiveTab] = useState<'maths' | 'science'>('maths');

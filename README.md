@@ -1,20 +1,39 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# PracticeHub
 
-# Run and deploy your AI Studio app
+A comprehensive maths revision platform for KS2, KS3, GCSE, and A-Level students.
 
-This contains everything you need to run your app locally.
+## 🚀 Getting Started
 
-View your app in AI Studio: https://ai.studio/apps/8ee7425a-5d75-4698-8df2-9c01612386e9
+This project is designed to be managed via a **GitOps** workflow. All educational content is stored as JSON files in the `src/data/` directory.
 
-## Run Locally
+### Repository Structure
 
-**Prerequisites:**  Node.js
+- `.github/workflows/deploy.yml`: CI/CD pipeline for automatic deployment to Cloud Run.
+- `src/data/`: JSON data files for all subjects and levels.
+  - `gcse_edexcel_maths.json`: GCSE Maths topics.
+  - `ks3_assessments.json`: KS3 assessment links.
+  - `ks2_past_papers.json`: KS2 past paper links.
+  - `gcse_edexcel_past_papers.json`: GCSE past paper links.
+- `src/pages/`: React components for each section of the app.
 
+## 🛠 How to Update Content
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1.  **Clone the repository** (after exporting from AI Studio).
+2.  **Modify the JSON files** in `src/data/`.
+3.  **Commit and Push** your changes to the `main` branch.
+4.  The GitHub Action will automatically build and deploy the updated app.
+
+## 📦 CI/CD Setup
+
+To enable automatic deployment to Google Cloud Run:
+
+1.  Create a Google Cloud Project.
+2.  Set up a Service Account with "Cloud Run Developer" and "Service Account User" roles.
+3.  Generate a JSON key for the Service Account.
+4.  Add the following Secrets to your GitHub repository:
+    - `GCP_CREDENTIALS`: The content of your Service Account JSON key.
+    - `GEMINI_API_KEY`: Your Google Gemini API key.
+
+## 🛡 License
+
+Apache-2.0

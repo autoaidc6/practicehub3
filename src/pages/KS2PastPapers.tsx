@@ -11,6 +11,8 @@ import {
   Download
 } from 'lucide-react';
 
+import papersData from '../data/ks2_past_papers.json';
+
 interface PaperSet {
   year: string;
   links: {
@@ -19,66 +21,9 @@ interface PaperSet {
   }[];
 }
 
-const ENGLISH_PAPERS: PaperSet[] = [
-  {
-    year: "2025 SATs",
-    links: [
-      { label: "Reading Booklet", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_English_reading_booklet.pdf" },
-      { label: "Reading Answer Booklet", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_English_reading_answer_booklet.pdf" },
-      { label: "Marking Scheme", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_English_reading_mark_schemes.pdf" }
-    ]
-  },
-  {
-    year: "2024 SATs",
-    links: [
-      { label: "Reading Booklet", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_English_reading_Reading_booklet.pdf" },
-      { label: "Reading Answer Booklet", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_English_reading_Reading_answer_booklet.pdf" },
-      { label: "Marking Scheme", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_English_reading_mark_schemes.pdf" }
-    ]
-  }
-];
-
-const MATHS_PAPERS: PaperSet[] = [
-  {
-    year: "2025 SATs",
-    links: [
-      { label: "Paper 1 (Arithmetic)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_mathematics_Paper1_arithmetic.pdf" },
-      { label: "Paper 2 (Reasoning)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_mathematics_Paper2_reasoning.pdf" },
-      { label: "Paper 3 (Reasoning)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_mathematics_Paper3_reasoning.pdf" },
-      { label: "Marking Scheme", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_mathematics_mark_schemes.pdf" }
-    ]
-  },
-  {
-    year: "2024 SATs",
-    links: [
-      { label: "Paper 1 (Arithmetic)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_mathematics_Paper1_arithmetic.pdf" },
-      { label: "Paper 2 (Reasoning)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_mathematics_Paper2_reasoning.pdf" },
-      { label: "Paper 3 (Reasoning)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_mathematics_Paper3_reasoning.pdf" },
-      { label: "Marking Scheme", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_mathematics_Mark_schemes.pdf" }
-    ]
-  }
-];
-
-const SPAG_PAPERS: PaperSet[] = [
-  {
-    year: "2025 KS2",
-    links: [
-      { label: "Paper 1 (Questions)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_English_GPS_Paper1_questions.pdf" },
-      { label: "Paper 2 (Spelling)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_English_GPS_Paper2_spelling.pdf" },
-      { label: "Spelling Transcript", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_English_GPS_Spelling-transcript.pdf" },
-      { label: "Marking Scheme", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2025_KS2_English_GPS_mark_schemes.pdf" }
-    ]
-  },
-  {
-    year: "2024 KS2",
-    links: [
-      { label: "Paper 1 (Questions)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_English_GPS_Paper1_questions.pdf" },
-      { label: "Paper 2 (Spelling)", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_English_GPS_Paper2_spelling.pdf" },
-      { label: "Spelling Transcript", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_Spelling-transcript.pdf" },
-      { label: "Marking Scheme", url: "https://www.satspapersguide.co.uk/wp-content/uploads/2025/09/2024_ks2_English_GPS_Mark_schemes.pdf" }
-    ]
-  }
-];
+const ENGLISH_PAPERS: PaperSet[] = papersData.ENGLISH_PAPERS;
+const MATHS_PAPERS: PaperSet[] = papersData.MATHS_PAPERS;
+const SPAG_PAPERS: PaperSet[] = papersData.SPAG_PAPERS;
 
 export default function KS2PastPapers({ onBack }: { onBack: () => void }) {
   const [activeTab, setActiveTab] = useState<'maths' | 'english' | 'spag'>('maths');

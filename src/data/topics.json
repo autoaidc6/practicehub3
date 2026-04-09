@@ -1,0 +1,32 @@
+{
+  "GCSE_ENGLISH_EDEXCEL_TOPICS": [
+    { "name": "English Literature: Macbeth", "grade": "8+", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "English Language: Creative Writing", "grade": "7", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "English Literature: An Inspector Calls", "grade": "6", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" }
+  ],
+  "GCSE_SCIENCE_EDEXCEL_TOPICS": [
+    { "name": "Biology: Cell Structure", "grade": "8+", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Chemistry: Atomic Structure", "grade": "7", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Physics: Energy Transfers", "grade": "6", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" }
+  ],
+  "KS3_ENGLISH_TOPICS": [
+    { "name": "Reading Comprehension", "grade": "Year 9", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Spelling and Grammar", "grade": "Year 8", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Creative Writing", "grade": "Year 7", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" }
+  ],
+  "KS3_SCIENCE_TOPICS": [
+    { "name": "Biology: Cells", "grade": "Year 9", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Chemistry: Particles", "grade": "Year 8", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Physics: Forces", "grade": "Year 7", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" }
+  ],
+  "KS2_READING_TOPICS": [
+    { "name": "Inference", "grade": "Greater Depth", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Vocabulary", "grade": "Expected", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Retrieval", "grade": "Expected", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" }
+  ],
+  "KS2_GPS_TOPICS": [
+    { "name": "Punctuation", "grade": "Greater Depth", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Grammar", "grade": "Expected", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" },
+    { "name": "Spelling", "grade": "Expected", "videoUrl": "#", "questionsUrl": "#", "solutionsUrl": "#" }
+  ]
+}

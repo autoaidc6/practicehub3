@@ -13,6 +13,7 @@ import KS3Assessments from './pages/KS3Assessments';
 import GCSEExamPapers from './pages/GCSEExamPapers';
 import ALevelExamPapers from './pages/ALevelExamPapers';
 import GCSEEdexcelPastPapers from './pages/GCSEEdexcelPastPapers';
+import AdminDashboard from './pages/AdminDashboard';
 import CopyrightNotice from './pages/CopyrightNotice';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RevisionPage from './components/RevisionPage';
@@ -145,6 +146,7 @@ type Page =
   | 'gcse-exam-papers'
   | 'gcse-edexcel-past-papers'
   | 'alevel-exam-papers'
+  | 'admin-dashboard'
   | 'copyright-notice'
   | 'privacy-policy';
 
@@ -255,6 +257,8 @@ export default function App() {
         );
       case 'gcse-edexcel-past-papers':
         return <GCSEEdexcelPastPapers onBack={() => setCurrentPage('gcse-exam-papers')} />;
+      case 'admin-dashboard':
+        return <AdminDashboard onBack={() => setCurrentPage('home')} />;
       case 'alevel-exam-papers':
         return <ALevelExamPapers onBack={() => setCurrentPage('home')} />;
       case 'copyright-notice':
@@ -470,6 +474,8 @@ export default function App() {
               <button onClick={() => setCurrentPage('copyright-notice')} className="underline hover:text-gray-200">Copyright Notice</button>
               <span className="mx-2">|</span>
               <button onClick={() => setCurrentPage('privacy-policy')} className="underline hover:text-gray-200">Privacy Policy</button>
+              <span className="mx-2">|</span>
+              <button onClick={() => setCurrentPage('admin-dashboard')} className="underline hover:text-gray-200">Admin</button>
               <span className="mx-2">|</span>
               Contact: <a href="mailto:support@practicehub.com" className="underline hover:text-gray-200">support@practicehub.com</a>
             </p>
