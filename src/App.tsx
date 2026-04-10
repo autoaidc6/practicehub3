@@ -128,6 +128,7 @@ const Card = ({ title, subtitle, color, onClick }: CardProps) => {
 
 type Page = 
   | 'home' 
+  | 'section-view'
   | 'subject-selection' 
   | 'gcse-edexcel-maths' 
   | 'gcse-edexcel-english' 
@@ -172,6 +173,11 @@ export default function App() {
   const handleStageClick = (id: string, name: string) => {
     setSelectedStage({ id, name });
     setCurrentPage('subject-selection');
+  };
+
+  const handleSectionClick = (id: string, name: string) => {
+    setSelectedStage({ id, name });
+    setCurrentPage('section-view');
   };
 
   const renderPage = () => {
@@ -270,7 +276,7 @@ export default function App() {
     }
   };
 
-  if (currentPage !== 'home' && currentPage !== 'subject-selection') {
+  if (currentPage !== 'home' && currentPage !== 'subject-selection' && currentPage !== 'section-view') {
     return renderPage();
   }
 
@@ -314,65 +320,35 @@ export default function App() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
             >
-              {/* KS2 & KS3 Section */}
               <Card 
-                title="KS2 SATs" 
-                subtitle="Revision" 
+                title="KS2" 
+                subtitle="Primary" 
                 color="blue" 
-                onClick={() => handleStageClick('ks2-sats', 'KS2 SATs')}
+                onClick={() => handleSectionClick('ks2', 'KS2')}
               />
               <Card 
                 title="KS3" 
-                subtitle="Revision" 
+                subtitle="Secondary" 
                 color="blue" 
-                onClick={() => handleStageClick('ks3-maths', 'KS3')}
+                onClick={() => handleSectionClick('ks3', 'KS3')}
               />
               <Card 
-                title="KS2 Past Papers" 
-                subtitle="(all years)" 
-                color="blue" 
-                onClick={() => setCurrentPage('ks2-past-papers')}
-              />
-              <Card 
-                title="KS3 Assessments" 
-                subtitle="(all boards)" 
-                color="blue" 
-                onClick={() => setCurrentPage('ks3-assessments')}
-              />
-
-              {/* GCSE Section */}
-              <Card 
-                title="GCSE Revision" 
-                subtitle="(Edexcel)" 
+                title="GCSE" 
+                subtitle="Secondary" 
                 color="purple" 
-                onClick={() => handleStageClick('gcse-edexcel', 'GCSE (Edexcel)')}
+                onClick={() => handleSectionClick('gcse', 'GCSE')}
               />
               <Card 
-                title="GCSE Revision" 
-                subtitle="(AQA)" 
-                color="purple" 
-                onClick={() => handleStageClick('gcse-aqa', 'GCSE (AQA)')}
-              />
-              <Card 
-                title="GCSE Past Papers" 
-                subtitle="(all boards)" 
-                color="purple" 
-                onClick={() => setCurrentPage('gcse-exam-papers')}
-              />
-
-              {/* A-Level Section */}
-              <Card title="A-Level Revision" color="green" />
-              <Card 
-                title="A-Level Past Papers" 
-                subtitle="(all boards)" 
+                title="A-Level" 
+                subtitle="Sixth Form" 
                 color="green" 
-                onClick={() => setCurrentPage('alevel-exam-papers')}
+                onClick={() => handleSectionClick('alevel', 'A-Level')}
               />
 
               {/* Buy Me a Coffee */}
-              <div className="lg:col-start-2 lg:col-span-2 flex items-center justify-center">
+              <div className="md:col-span-2 flex items-center justify-center mt-8">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -381,6 +357,99 @@ export default function App() {
                   <Coffee className="w-6 h-6" />
                   Buy Me a Coffee
                 </motion.button>
+              </div>
+            </motion.div>
+          ) : currentPage === 'section-view' ? (
+            <motion.div
+              key="section-view"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="max-w-4xl mx-auto"
+            >
+              <div className="flex items-center gap-4 mb-12">
+                <button 
+                  onClick={() => setCurrentPage('home')}
+                  className="hover:bg-gray-200 p-2 rounded-full transition-colors"
+                >
+                  <ArrowLeft className="w-6 h-6 text-gray-600" />
+                </button>
+                <h2 className="text-4xl font-black text-[#3498db] uppercase tracking-tight">
+                  {selectedStage?.name} Resources
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {selectedStage?.id === 'ks2' && (
+                  <>
+                    <Card 
+                      title="Revision" 
+                      subtitle="Topics & Quizzes" 
+                      color="blue" 
+                      onClick={() => handleStageClick('ks2-sats', 'KS2 SATs')} 
+                    />
+                    <Card 
+                      title="Past Papers" 
+                      subtitle="SATs Papers" 
+                      color="blue" 
+                      onClick={() => setCurrentPage('ks2-past-papers')} 
+                    />
+                  </>
+                )}
+                {selectedStage?.id === 'ks3' && (
+                  <>
+                    <Card 
+                      title="Revision" 
+                      subtitle="Topics & Quizzes" 
+                      color="blue" 
+                      onClick={() => handleStageClick('ks3-maths', 'KS3')} 
+                    />
+                    <Card 
+                      title="Assessments" 
+                      subtitle="End of Year" 
+                      color="blue" 
+                      onClick={() => setCurrentPage('ks3-assessments')} 
+                    />
+                  </>
+                )}
+                {selectedStage?.id === 'gcse' && (
+                  <>
+                    <Card 
+                      title="Revision (Edexcel)" 
+                      subtitle="Maths, English, Science" 
+                      color="purple" 
+                      onClick={() => handleStageClick('gcse-edexcel', 'GCSE (Edexcel)')} 
+                    />
+                    <Card 
+                      title="Revision (AQA)" 
+                      subtitle="Coming Soon" 
+                      color="purple" 
+                      onClick={() => handleStageClick('gcse-aqa', 'GCSE (AQA)')} 
+                    />
+                    <Card 
+                      title="Past Papers" 
+                      subtitle="All Boards" 
+                      color="purple" 
+                      onClick={() => setCurrentPage('gcse-exam-papers')} 
+                    />
+                  </>
+                )}
+                {selectedStage?.id === 'alevel' && (
+                  <>
+                    <Card 
+                      title="Revision" 
+                      subtitle="Coming Soon" 
+                      color="green" 
+                      onClick={() => alert('A-Level Revision coming soon!')} 
+                    />
+                    <Card 
+                      title="Past Papers" 
+                      subtitle="All Boards" 
+                      color="green" 
+                      onClick={() => setCurrentPage('alevel-exam-papers')} 
+                    />
+                  </>
+                )}
               </div>
             </motion.div>
           ) : currentPage === 'subject-selection' ? (
@@ -393,7 +462,7 @@ export default function App() {
             >
               <div className="flex items-center gap-4 mb-8">
                 <button 
-                  onClick={() => setCurrentPage('home')}
+                  onClick={() => setCurrentPage('section-view')}
                   className="hover:bg-gray-200 p-2 rounded-full transition-colors"
                 >
                   <ArrowLeft className="w-6 h-6 text-gray-600" />

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { 
   LayoutDashboard, 
@@ -14,12 +14,67 @@ import {
   FileJson,
   CheckCircle2,
   AlertCircle,
-  ExternalLink
+  ExternalLink,
+  Save,
+  FileCode
 } from 'lucide-react';
-import * as topics from '../data/topics';
 
 export default function AdminDashboard({ onBack }: { onBack: () => void }) {
   const [activeTab, setActiveTab] = useState<'overview' | 'data' | 'cicd'>('overview');
+  const [files, setFiles] = useState<string[]>([]);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
+  const [fileContent, setFileContent] = useState<string>('');
+  const [isSaving, setIsSaving] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
+  useEffect(() => {
+    fetchFiles();
+  }, []);
+
+  const fetchFiles = async () => {
+    try {
+      const res = await fetch('/api/data-files');
+      const data = await res.json();
+      setFiles(data);
+    } catch (err) {
+      console.error('Failed to fetch files', err);
+    }
+  };
+
+  const handleFileSelect = async (filename: string) => {
+    setSelectedFile(filename);
+    setMessage(null);
+    try {
+      const res = await fetch(`/api/data-files/${filename}`);
+      const data = await res.json();
+      setFileContent(JSON.stringify(data, null, 2));
+    } catch (err) {
+      console.error('Failed to fetch file content', err);
+    }
+  };
+
+  const handleSave = async () => {
+    if (!selectedFile) return;
+    setIsSaving(true);
+    setMessage(null);
+    try {
+      const content = JSON.parse(fileContent);
+      const res = await fetch(`/api/data-files/${selectedFile}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(content),
+      });
+      if (res.ok) {
+        setMessage({ type: 'success', text: 'File saved successfully!' });
+      } else {
+        throw new Error('Failed to save');
+      }
+    } catch (err) {
+      setMessage({ type: 'error', text: err instanceof Error ? err.message : 'Invalid JSON format' });
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const resourceStats = [
     { name: 'GCSE Maths', count: 120 }, // Estimated from JSON
@@ -124,58 +179,76 @@ export default function AdminDashboard({ onBack }: { onBack: () => void }) {
             <div className="bg-blue-50 border border-blue-100 p-6 rounded-2xl flex gap-4">
               <AlertCircle className="w-6 h-6 text-blue-600 shrink-0" />
               <div>
-                <h4 className="font-bold text-blue-900 mb-1 uppercase text-sm">GitOps Workflow</h4>
+                <h4 className="font-bold text-blue-900 mb-1 uppercase text-sm">Interactive Data Editor</h4>
                 <p className="text-blue-700 text-sm">
-                  This project uses a GitOps approach. To update resources, modify the JSON files in your GitHub repository. 
-                  The CI/CD pipeline will automatically rebuild and deploy the changes.
+                  Modify the JSON files directly below. Changes are saved to the local file system. 
+                  Remember to commit these changes to your GitHub repository to trigger a production deployment.
                 </p>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
-                    <FileJson className="w-5 h-5 text-orange-500" />
-                    Export Current Data
-                  </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+              <div className="lg:col-span-1 space-y-4">
+                <h3 className="font-bold text-gray-700 uppercase tracking-wider text-sm mb-4 flex items-center gap-2">
+                  <FileJson className="w-4 h-4 text-orange-500" />
+                  Data Files
+                </h3>
+                <div className="space-y-2">
+                  {files.map((file) => (
+                    <button
+                      key={file}
+                      onClick={() => handleFileSelect(file)}
+                      className={`w-full text-left px-4 py-3 rounded-xl text-sm font-medium transition-all border ${
+                        selectedFile === file
+                          ? 'bg-blue-50 border-blue-200 text-blue-700 shadow-sm'
+                          : 'bg-white border-gray-100 text-gray-600 hover:bg-gray-50'
+                      }`}
+                    >
+                      {file}
+                    </button>
+                  ))}
                 </div>
-                <p className="text-sm text-gray-500 mb-6">
-                  Copy this JSON to update your <code>src/data/resources.json</code> file.
-                </p>
-                <div className="bg-gray-900 rounded-xl p-4 overflow-x-auto">
-                  <pre className="text-green-400 text-xs font-mono">
-                    {JSON.stringify(topics, null, 2).substring(0, 500)}...
-                  </pre>
-                </div>
-                <button className="w-full mt-6 bg-gray-800 text-white py-3 rounded-xl font-bold text-sm hover:bg-gray-700 transition-colors">
-                  Copy Full JSON
-                </button>
               </div>
 
-              <div className="bg-white p-8 rounded-2xl border border-gray-100 shadow-sm">
-                <h3 className="font-bold text-gray-800 uppercase tracking-wider mb-6 flex items-center gap-2">
-                  <RefreshCw className="w-5 h-5 text-blue-500" />
-                  Update Instructions
-                </h3>
-                <ul className="space-y-4 text-sm text-gray-600">
-                  <li className="flex gap-3">
-                    <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0">1</span>
-                    <span>Navigate to your GitHub repository.</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0">2</span>
-                    <span>Edit the files in <code>src/data/</code>.</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0">3</span>
-                    <span>Commit and push your changes.</span>
-                  </li>
-                  <li className="flex gap-3">
-                    <span className="bg-blue-100 text-blue-600 w-6 h-6 rounded-full flex items-center justify-center font-bold shrink-0">4</span>
-                    <span>Wait ~2 minutes for the CI/CD pipeline to deploy.</span>
-                  </li>
-                </ul>
+              <div className="lg:col-span-3">
+                {selectedFile ? (
+                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden flex flex-col h-[600px]">
+                    <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <FileCode className="w-5 h-5 text-blue-500" />
+                        <span className="font-bold text-gray-700">{selectedFile}</span>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        {message && (
+                          <span className={`text-xs font-bold ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                            {message.text}
+                          </span>
+                        )}
+                        <button
+                          onClick={handleSave}
+                          disabled={isSaving}
+                          className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-blue-700 transition-colors disabled:opacity-50"
+                        >
+                          <Save className="w-4 h-4" />
+                          {isSaving ? 'Saving...' : 'Save Changes'}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex-1 p-0">
+                      <textarea
+                        value={fileContent}
+                        onChange={(e) => setFileContent(e.target.value)}
+                        className="w-full h-full p-6 font-mono text-sm bg-gray-900 text-green-400 focus:outline-none resize-none"
+                        spellCheck={false}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm h-[600px] flex flex-col items-center justify-center text-gray-400">
+                    <FileJson className="w-16 h-16 mb-4 opacity-20" />
+                    <p className="font-bold uppercase tracking-widest text-sm">Select a file to edit</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
